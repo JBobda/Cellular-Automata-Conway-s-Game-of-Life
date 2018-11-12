@@ -37,19 +37,15 @@ public class Display {
         frame.setVisible(true);
     }
     
-    public void render(){
-        bufferStrategy = canvas.getBufferStrategy();
-        if(bufferStrategy == null){
-            canvas.createBufferStrategy(3);
-            return;
-        }
-        
-        graphics = bufferStrategy.getDrawGraphics();
-        graphics.setColor(Color.RED);
-        graphics.fillRect(0, 0, width, height);
-        graphics.dispose();
-        bufferStrategy.show();
-        
+    public BufferStrategy getBufferStrategy(){
+        return bufferStrategy;
     }
     
+    public Canvas getCanvas(){
+        return canvas;
+    }
+    
+    public Graphics getGraphics(){
+        return graphics;
+    }
 }

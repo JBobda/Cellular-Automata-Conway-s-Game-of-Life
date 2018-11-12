@@ -1,7 +1,8 @@
 package gameoflife;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
 
 public class GameOfLife implements Runnable{
 
@@ -13,6 +14,9 @@ public class GameOfLife implements Runnable{
     private static final int CELLHEIGHT = 10;
     
     private Display display;
+    private BufferStrategy bufferStrategy;
+    private Graphics graphics;
+    
     private Cell[][] gameBoard;
     private Thread thread;
     
@@ -27,13 +31,35 @@ public class GameOfLife implements Runnable{
         init();
         
         while(running){
-            display.render();
+            render();
         }
         
         stop();
     }
     
+    public void render(){
+        bufferStrategy = display.getCanvas().getBufferStrategy();
+        if(bufferStrategy == null){
+            display.getCanvas().createBufferStrategy(3);
+            return;
+        }
+        
+        graphics = bufferStrategy.getDrawGraphics();
+        //RENDER HERE
+        for (int i = 0; i < gameBoard.length; i++) {
+            for (int j = 0; j < gameBoard[i].length; j++) {
+                gameBoard[i][j].render(graphics, CELLWIDTH, CELLHEIGHT);
+            }
+        }
+        
+        //STOP RENDERING HERE
+        graphics.dispose();
+        bufferStrategy.show();
+        
+    }
+    
     public synchronized void start(){
+        if(!running) running = true;
         thread = new Thread(this);
         thread.start();
     }
