@@ -1,15 +1,13 @@
 package gameoflife;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 public class GameOfLife implements Runnable{
-
+    //Static game info
+    private static final String TITLE = "Conway's Game of Life";
     private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
-    private static final String TITLE = "Conway's Game of Life";
-    
     private static final int CELLWIDTH = 10;
     private static final int CELLHEIGHT = 10;
     
@@ -27,14 +25,20 @@ public class GameOfLife implements Runnable{
         gameBoard = new Cell[WIDTH/CELLWIDTH][HEIGHT/CELLHEIGHT];
     }
     
+    @Override
     public void run(){
         init();
         
         while(running){
+            update();
             render();
         }
         
         stop();
+    }
+    
+    public void update(){
+        
     }
     
     public void render(){
@@ -46,12 +50,11 @@ public class GameOfLife implements Runnable{
         
         graphics = bufferStrategy.getDrawGraphics();
         //RENDER HERE
-        for (int i = 0; i < gameBoard.length; i++) {
-            for (int j = 0; j < gameBoard[i].length; j++) {
-                gameBoard[i][j].render(graphics, CELLWIDTH, CELLHEIGHT);
+        for (Cell[] gameBoard1 : gameBoard) {
+            for (Cell gameBoard11 : gameBoard1) {
+                gameBoard11.render(graphics, CELLWIDTH, CELLHEIGHT);
             }
         }
-        
         //STOP RENDERING HERE
         graphics.dispose();
         bufferStrategy.show();
@@ -76,12 +79,16 @@ public class GameOfLife implements Runnable{
         //Loading game board with the different cells
         for(int i = 0; i < gameBoard.length; i++){
             for(int j = 0; j < gameBoard[i].length; j++){
-                gameBoard[i][j] = new Cell(i, j, Status.DEAD);
+                Status stat;
+                int choice = (int)(Math.random() * 2);
+                if(choice == 1)
+                    stat = Status.DEAD;
+                else
+                    stat = Status.ALIVE;
+                
+                gameBoard[i][j] = new Cell(i, j, stat);
             }
         }
-        
-        //Set running to true
-        running = true;
     }
     
     public static void main(String[] args) {

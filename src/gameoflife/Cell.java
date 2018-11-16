@@ -15,8 +15,15 @@ public class Cell {
         this.status = status;
     }
     
+    public void update(){
+        
+            
+    }
+    
     public void render(Graphics graphics, int cellWidth, int cellHeight){
         graphics.setColor(Color.BLACK);
         graphics.drawRect(row*cellHeight, column*cellWidth, cellWidth, cellHeight);
+        if(status == Status.ALIVE)
+            graphics.fillRect(row*cellHeight, column*cellWidth, cellWidth, cellHeight);
     }
 }
