@@ -22,8 +22,16 @@ public class Cell {
     
     public void render(Graphics graphics, int cellWidth, int cellHeight){
         graphics.setColor(Color.BLACK);
-        graphics.drawRect(row*cellHeight, column*cellWidth, cellWidth, cellHeight);
+        graphics.drawRect(column*cellWidth, row*cellHeight, cellWidth, cellHeight);
         if(status == Status.ALIVE)
-            graphics.fillRect(row*cellHeight, column*cellWidth, cellWidth, cellHeight);
+            graphics.fillRect(column*cellWidth,row*cellHeight, cellWidth, cellHeight);
+    }
+    
+    public void setStatus(Status status){
+        this.status = status;
+    }
+    
+    public Status getStatus(){
+        return status;
     }
 }
