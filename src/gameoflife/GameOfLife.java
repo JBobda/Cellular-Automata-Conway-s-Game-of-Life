@@ -35,7 +35,7 @@ public class GameOfLife implements Runnable{
             render();
             
             try {
-                Thread.sleep(500);
+                Thread.sleep(100);
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
@@ -136,10 +136,13 @@ public class GameOfLife implements Runnable{
                 gameBoard[i][j] = new Cell(i, j, stat);
             }   
         }
-        gameBoard[2][2].setStatus(Status.ALIVE);
+        
+        //Glider
         gameBoard[2][3].setStatus(Status.ALIVE);
-        gameBoard[2][4].setStatus(Status.ALIVE);
-        //gameBoard[3][2].setStatus(Status.ALIVE);
+        gameBoard[3][3].setStatus(Status.ALIVE);
+        gameBoard[4][3].setStatus(Status.ALIVE);
+        gameBoard[4][2].setStatus(Status.ALIVE);
+        gameBoard[3][1].setStatus(Status.ALIVE);
         
     }
     
