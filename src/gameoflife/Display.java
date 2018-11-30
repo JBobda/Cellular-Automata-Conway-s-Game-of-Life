@@ -11,6 +11,7 @@ public class Display {
     private final Canvas canvas;
     private BufferStrategy bufferStrategy;
     private Graphics graphics;
+    private MouseInput mouseInput;
     
     private final int width;
     private final int height;
@@ -23,17 +24,19 @@ public class Display {
         
         frame = new JFrame();
         canvas = new Canvas();
+        mouseInput = new MouseInput();
         init();
     }
     
     private void init(){
-        getCanvas().setSize(new Dimension(getWidth(), getHeight()));
-        getFrame().setTitle(getTitle()); 
-        getFrame().add(getCanvas());
-        getFrame().pack();
-        getFrame().setLocationRelativeTo(null);
-        getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getFrame().setVisible(true);
+        canvas.setSize(new Dimension(getWidth(), getHeight()));
+        canvas.addMouseListener(mouseInput);
+        frame.setTitle(getTitle()); 
+        frame.add(canvas);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
     }
     
     /**
