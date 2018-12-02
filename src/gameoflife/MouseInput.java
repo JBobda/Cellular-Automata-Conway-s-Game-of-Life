@@ -2,8 +2,12 @@ package gameoflife;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-public class MouseInput implements MouseListener{
+public class MouseInput implements MouseListener, MouseMotionListener {
+
+    private int mouseX;
+    private int mouseY;
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -11,8 +15,6 @@ public class MouseInput implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        //TODO
-        System.out.printf("The Location of the click was %d %d\n", e.getX(),e.getY());
     }
 
     @Override
@@ -26,5 +28,31 @@ public class MouseInput implements MouseListener{
     @Override
     public void mouseExited(MouseEvent e) {
     }
-    
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        mouseX = e.getX();
+        mouseY = e.getY();
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }
+
+    public int getMouseX() {
+        return mouseX;
+    }
+
+    public void setMouseX(int mouseX) {
+        this.mouseX = mouseX;
+    }
+
+    public int getMouseY() {
+        return mouseY;
+    }
+
+    public void setMouseY(int mouseY) {
+        this.mouseY = mouseY;
+    }
 }

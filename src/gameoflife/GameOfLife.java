@@ -1,7 +1,6 @@
 package gameoflife;
 
-import java.awt.Graphics;
-import java.awt.image.BufferStrategy;
+import java.awt.*;
 
 public class GameOfLife implements Runnable{
     //Static game info
@@ -12,8 +11,6 @@ public class GameOfLife implements Runnable{
     private static final int CELLHEIGHT = 15;
     
     private Display display;
-    private BufferStrategy bufferStrategy;
-    private Graphics graphics;
     
     private Cell[][] gameBoard;
     private Thread thread;
@@ -21,18 +18,16 @@ public class GameOfLife implements Runnable{
     private boolean running;
     
     public GameOfLife(){
-        display = new Display(WIDTH, HEIGHT, TITLE);
+        display = new Display(WIDTH, HEIGHT, TITLE, this);
         gameBoard = new Cell[HEIGHT/CELLHEIGHT][WIDTH/CELLWIDTH];
     }
     
     @Override
     public void run(){
         init();
-        render();
         while(running){
             update();
-            
-            render();
+            display.repaint();
             
             try {
                 Thread.sleep(100);
@@ -40,7 +35,7 @@ public class GameOfLife implements Runnable{
                 ex.printStackTrace();
             }
         }
-        
+
         stop();
     }
     
@@ -95,19 +90,12 @@ public class GameOfLife implements Runnable{
         gameBoard = cloneBoard(tempBoard);
     }
     
-    public void render(){
-        graphics = bufferStrategy.getDrawGraphics();
-        graphics.clearRect(0, 0, WIDTH, HEIGHT);
-        //RENDER HERE
+    public void render(Graphics g){
         for (Cell[] gameBoard1 : gameBoard) {
             for (Cell gameBoard11 : gameBoard1) {
-                gameBoard11.render(graphics, CELLWIDTH, CELLHEIGHT);
+                gameBoard11.render(g, CELLWIDTH, CELLHEIGHT);
             }
         }
-        //STOP RENDERING HERE
-        graphics.dispose();
-        bufferStrategy.show();
-        
     }
     
     public synchronized void start(){
@@ -125,10 +113,6 @@ public class GameOfLife implements Runnable{
     }
     
     private void init(){
-        //Prepare canvas
-        display.getCanvas().createBufferStrategy(3);
-        bufferStrategy = display.getCanvas().getBufferStrategy();
-        
         //Loading game board with the different cells
         for(int i = 0; i < gameBoard.length; i++){
             for(int j = 0; j < gameBoard[i].length; j++){
