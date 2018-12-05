@@ -12,12 +12,14 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     private int cellRow;
     private int CELLWIDTH;
     private int CELLHEIGHT;
+    private Status status;
 
     public MouseInput(int cellWidth, int cellHeight){
         mouseX = -10;
         mouseY = -10;
         CELLWIDTH = cellWidth;
         CELLHEIGHT = cellHeight;
+        status = Status.DEAD;
     }
 
     @Override
@@ -28,6 +30,12 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     public void mousePressed(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
+
+        if(e.getButton() == 1)
+            status = Status.ALIVE;
+        else if(e.getButton() == 3)
+            status = Status.DEAD;
+
         calculateCurrentCell();
     }
 
@@ -50,6 +58,12 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     public void mouseDragged(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
+
+        if(e.getButton() == 1)
+            status = Status.ALIVE;
+        else if(e.getButton() == 3)
+            status = Status.DEAD;
+
         calculateCurrentCell();
     }
 
@@ -109,5 +123,13 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
     public void setCELLHEIGHT(int CELLHEIGHT) {
         this.CELLHEIGHT = CELLHEIGHT;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

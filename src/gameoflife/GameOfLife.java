@@ -19,7 +19,7 @@ public class GameOfLife implements Runnable{
     private boolean running;
 
     //Makes sure that the player has started the seed
-    private boolean playing;
+    public boolean playing;
     
     public GameOfLife(){
         display = new Display(WIDTH, HEIGHT, TITLE, this);
@@ -47,7 +47,7 @@ public class GameOfLife implements Runnable{
     
     public void update(){
         if(!playing){
-            gameBoard[display.getMouseInput().getCellRow()][display.getMouseInput().getCellCol()].setStatus(Status.ALIVE);
+            gameBoard[display.getMouseInput().getCellRow()][display.getMouseInput().getCellCol()].setStatus(display.getMouseInput().getStatus());
             return;
         }
 
