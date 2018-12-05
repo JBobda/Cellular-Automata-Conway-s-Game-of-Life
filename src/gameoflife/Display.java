@@ -19,7 +19,7 @@ public class Display extends JPanel {
         
         frame = new JFrame();
         this.game = game;
-        mouseInput = new MouseInput();
+        mouseInput = new MouseInput(game.getCELLWIDTH(), game.getCELLHEIGHT());
         init();
     }
     

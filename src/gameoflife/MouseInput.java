@@ -8,6 +8,17 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
     private int mouseX;
     private int mouseY;
+    private int cellCol;
+    private int cellRow;
+    private int CELLWIDTH;
+    private int CELLHEIGHT;
+
+    public MouseInput(int cellWidth, int cellHeight){
+        mouseX = -10;
+        mouseY = -10;
+        CELLWIDTH = cellWidth;
+        CELLHEIGHT = cellHeight;
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -15,10 +26,16 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        mouseX = e.getX();
+        mouseY = e.getY();
+        calculateCurrentCell();
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        mouseX = -1;
+        mouseY = -1;
+        calculateCurrentCell();
     }
 
     @Override
@@ -33,11 +50,17 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     public void mouseDragged(MouseEvent e) {
         mouseX = e.getX();
         mouseY = e.getY();
+        calculateCurrentCell();
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
 
+    }
+
+    private void calculateCurrentCell(){
+        cellCol = mouseX/CELLWIDTH;
+        cellRow = mouseY/CELLHEIGHT;
     }
 
     public int getMouseX() {
@@ -54,5 +77,37 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
     public void setMouseY(int mouseY) {
         this.mouseY = mouseY;
+    }
+
+    public int getCellCol() {
+        return cellCol;
+    }
+
+    public void setCellCol(int cellCol) {
+        this.cellCol = cellCol;
+    }
+
+    public int getCellRow() {
+        return cellRow;
+    }
+
+    public void setCellRow(int cellRow) {
+        this.cellRow = cellRow;
+    }
+
+    public int getCELLWIDTH() {
+        return CELLWIDTH;
+    }
+
+    public void setCELLWIDTH(int CELLWIDTH) {
+        this.CELLWIDTH = CELLWIDTH;
+    }
+
+    public int getCELLHEIGHT() {
+        return CELLHEIGHT;
+    }
+
+    public void setCELLHEIGHT(int CELLHEIGHT) {
+        this.CELLHEIGHT = CELLHEIGHT;
     }
 }

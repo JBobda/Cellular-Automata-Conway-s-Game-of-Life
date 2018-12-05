@@ -14,14 +14,20 @@ public class GameOfLife implements Runnable{
     
     private Cell[][] gameBoard;
     private Thread thread;
-    
+
+    //Makes sure the program is running
     private boolean running;
+
+    //Makes sure that the player has started the seed
+    private boolean playing;
     
     public GameOfLife(){
         display = new Display(WIDTH, HEIGHT, TITLE, this);
         gameBoard = new Cell[HEIGHT/CELLHEIGHT][WIDTH/CELLWIDTH];
+        running = true;
+        playing = false;
     }
-    
+
     @Override
     public void run(){
         init();
@@ -40,6 +46,12 @@ public class GameOfLife implements Runnable{
     }
     
     public void update(){
+        if(!playing){
+            gameBoard[display.getMouseInput().getCellRow()][display.getMouseInput().getCellCol()].setStatus(Status.ALIVE);
+            return;
+        }
+
+
         Cell[][] tempBoard = cloneBoard(gameBoard);
 
         for (int i = 0; i < gameBoard.length; i++) {
@@ -87,6 +99,7 @@ public class GameOfLife implements Runnable{
                 }
             }
         }
+
         gameBoard = cloneBoard(tempBoard);
     }
     
@@ -139,6 +152,14 @@ public class GameOfLife implements Runnable{
             }
         }  
         return copy;
+    }
+
+    public static int getCELLWIDTH() {
+        return CELLWIDTH;
+    }
+
+    public static int getCELLHEIGHT() {
+        return CELLHEIGHT;
     }
     
     public static void main(String[] args) {
